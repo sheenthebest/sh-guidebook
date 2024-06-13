@@ -1,6 +1,13 @@
 # FiveM Guidebook
 
+## Showcase
+
+Check out this showcase video.
+[![Showcase](https://img.youtube.com/vi/WWMoiCKcK4k/0.jpg)](https://www.youtube.com/watch?v=WWMoiCKcK4k)
+
+
 ## Features List
+
 **Categorization and Subcategories:**
    - Supports main categories and their subcategories.
    - Dynamic content loading when clicking on a category or subcategory.
@@ -28,17 +35,18 @@
    - Close the UI by pressing the Escape key.
 
 **Style and Design:**
-   - Modern and clean design using gradients and transitions.
+   - Modern and clean design.
    - Responsive and user-friendly interface.
-   - Subtle animations and transitions for an enhanced user experience.
 
 ## Getting Started
 
 ### Prerequisites
+
 - A working FiveM server.
 - Basic knowledge of HTML, CSS, and JavaScript.
 
 ### Installation
+
 **Download the Files:**
    - Download and extract the project files to your FiveM resources directory.
 
