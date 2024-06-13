@@ -43,6 +43,7 @@ Check out this [showcase](https://www.youtube.com/watch?v=WWMoiCKcK4k) video.
 - A working FiveM server.
 - Basic knowledge of HTML, CSS, and JavaScript.
 
+
 ### Installation
 
 **Download the Files:**
