@@ -2,9 +2,7 @@
 
 ## Showcase
 
-Check out this showcase video.
-[![Showcase](https://img.youtube.com/vi/WWMoiCKcK4k/0.jpg)](https://www.youtube.com/watch?v=WWMoiCKcK4k)
-
+Check out this [showcase](https://www.youtube.com/watch?v=WWMoiCKcK4k) video.
 
 ## Features List
 
