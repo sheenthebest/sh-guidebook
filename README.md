@@ -39,20 +39,12 @@ Check out this [showcase](https://www.youtube.com/watch?v=WWMoiCKcK4k) video.
 ## Getting Started
 
 ### Prerequisites
-
 - A working FiveM server.
 - Basic knowledge of HTML, CSS, and JavaScript.
 
-
 ### Installation
-
-**Download the Files:**
    - Download and extract the project files to your FiveM resources directory.
-
-**Configure the UI:**
    - Open the `config.js` file to customize the categories, subcategories, and other settings.
-
-**Add to Server:**
    - Add the resource to your server configuration file (`server.cfg`) with the line:
      ```
      ensure sh-guidebook
