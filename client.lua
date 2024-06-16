@@ -9,7 +9,7 @@ if settings.command then
     end)
 
     if settings.keybind then
-        RegisterKeyMapping(settings.command, 'Guidebook', 'keyboard', 'F1')
+        RegisterKeyMapping(settings.command, 'Guidebook', 'keyboard', settings.keybind)
     end
 end
 
