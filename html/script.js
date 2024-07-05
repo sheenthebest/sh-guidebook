@@ -19,49 +19,45 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('body').style.display = 'none';
 
     const closeBtn = document.getElementById('close-btn');
-    closeBtn.addEventListener('click', () => {
-        $.post(`https://${GetParentResourceName()}/CLOSE_UI`);
+    closeBtn.addEventListener('click', closeUI);
 
-        const container = document.querySelector('.container');
-        container.classList.add('closing');
-        setTimeout(() => {
-            document.querySelector('body').style.display = 'none';
-            container.classList.remove('closing');
-        }, 500); 
-    });
+    window.addEventListener("message", handleMessage);
 
-    window.addEventListener("message", (event) => {
-        const data = event.data;
-        const action = data.action;
-        switch (action) {
-            case "SHOW_UI":
-                const body = document.querySelector('body');
-                body.style.display = 'flex';
-
-                const container = document.querySelector('.container');
-                container.style.display = 'flex';
-                container.classList.add('opening');
-                setTimeout(() => {
-                    container.classList.remove('opening');
-                }, 500);
-
-                break
-        }
-    });
-
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
-            $.post(`https://${GetParentResourceName()}/CLOSE_UI`);
-
-            const container = document.querySelector('.container');
-            container.classList.add('closing');
-            setTimeout(() => {
-                document.querySelector('body').style.display = 'none';
-                container.classList.remove('closing');
-            }, 500); 
+            closeUI();
         }
     });
 });
+
+function closeUI() {
+    $.post(`https://${GetParentResourceName()}/CLOSE_UI`);
+    const container = document.querySelector('.container');
+    container.classList.add('closing');
+    setTimeout(() => {
+        document.querySelector('body').style.display = 'none';
+        container.classList.remove('closing');
+    }, 500); 
+}
+
+function showUI() {
+    const body = document.querySelector('body');
+    body.style.display = 'flex';
+    const container = document.querySelector('.container');
+    container.style.display = 'flex';
+    container.classList.add('opening');
+    setTimeout(() => {
+        container.classList.remove('opening');
+    }, 500);
+}
+
+function handleMessage(event) {
+    const data = event.data;
+    const action = data.action;
+    if (action === "SHOW_UI") {
+        showUI();
+    }
+}
 
 function loadCategories(sidebar) {
     Object.entries(guidebookConfig.categories).forEach(([key, category]) => {
