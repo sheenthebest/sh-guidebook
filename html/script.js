@@ -372,3 +372,11 @@ function closeExternalLinkModal() {
 function openExternalLink(url) {
     openExternalLinkModal(url);
 }
+
+function discordLink() {
+    window.invokeNative("openUrl", 'https://discord.gg/invite/YqMmT75hSu')
+}
+
+function tebexLink() {
+    window.invokeNative("openUrl", 'https://sheenthebest.tebex.io')
+}
