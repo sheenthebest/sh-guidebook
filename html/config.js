@@ -32,8 +32,8 @@ const guidebookConfig = {
                         <p>This guidebook serves as a guide for both new and experienced players. You will find rules, tutorials, and other useful information here.</p>
                         <h3>Links</h3>
 
-                        <p><a href="javascript:openExternalLink('https://sheenthebest.tebex.io')">🌐 Website</a></p>
-                        <p><a>💬 discord.gg/YqMmT75hSu</a></p>
+                        <p><strong>Visit our website: <a href="javascript:tebexLink('https://sincityroleplay.tebex.io/category/2409418')"></a></p>
+                        <p><strong>Discord link: <a href="javascript:discordLink('https://discord.gg/YqMmT75hSu')">💬 Discord</a></p>
                         <p><strong>IP Address:</strong> 123.456.789.0</p>
                         <img src="https://wallpapers.com/images/hd/fivem-6q3bx9g2gdcu4th5.jpg" alt="" style="width:100%; height:auto;"/>
                     `
@@ -131,7 +131,7 @@ const guidebookConfig = {
                         <h3>VIP Purchase Guide</h3>
                         <p>To purchase VIP, follow these steps:</p>
                         <ol>
-                            <li>Visit our website: <a href="javascript:openExternalLink('https://sheenthebest.tebex.io')">🌐 Website</a></li>
+                            <li>Visit our website: <a href="javascript:tebexLink('https://sheenthebest.tebex.io')">🌐 Website</a></li>
                             <li>Go to the "Store" section.</li>
                             <li>Select the VIP package you want to purchase.</li>
                             <li>Complete the payment process.</li>
