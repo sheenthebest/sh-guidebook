@@ -4,11 +4,7 @@ lua54 'yes'
 
 author 'sheen'
 description 'Guidebook'
-version '1.0'
-
-shared_scripts {
-    'config.lua',
-}
+version '2.0'
 
 client_scripts {
     'client.lua',
@@ -21,8 +17,4 @@ files {
     'html/config.js',
     'html/script.js',
     'html/styles.css'
-}
-
-escrow_ignore {
-    '**.lua',
 }

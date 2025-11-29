@@ -1,9 +1,5 @@
 # FiveM Guidebook
 
-## Showcase
-
-Check out this [showcase](https://www.youtube.com/watch?v=WWMoiCKcK4k) video.
-
 ## Features List
 
 **Categorization and Subcategories:**
@@ -24,13 +20,9 @@ Check out this [showcase](https://www.youtube.com/watch?v=WWMoiCKcK4k) video.
 
 **External Links:**
    - Open external links in a modal window with a close option.
-   - Doesn't work with all websites.
 
 **Images:**
    - Ability to display images in full screen when clicked.
-
-**Keyboard Shortcuts:**
-   - Close the UI by pressing the Escape key.
 
 **Style and Design:**
    - Modern and clean design.
@@ -40,7 +32,7 @@ Check out this [showcase](https://www.youtube.com/watch?v=WWMoiCKcK4k) video.
 
 ### Prerequisites
 - A working FiveM server.
-- Basic knowledge of HTML, CSS, and JavaScript.
+- Basic knowledge of Lua, HTML, CSS, and JavaScript.
 
 ### Installation
    - Download and extract the project files to your FiveM resources directory.

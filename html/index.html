@@ -3,80 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FiveM Guidebook by sheen</title>
+    <title>Guidebook by sheen</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="config.js"></script>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Lato:wght@300;400;700&family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&family=Raleway:wght@400;700&family=Poppins:wght@400;700&family=Ubuntu:wght@400;700&family=Merriweather:wght@400;700&family=Oswald:wght@400;700&display=swap">
 </head>
 <body>
-    <div class="container">
-        <div id="fullScreenImg" class="full-screen-img" onclick="closeFullScreenImg()">
-            <img src="" alt="Full Screen Image">
-        </div>
+    <div id="app">
+        <transition name="guidebook-fade">
+            <div v-if="isVisible" class="guidebook-container" :style="{ fontFamily: settings.selectedFont }">
+                <!-- Close Button -->
+                <button class="close-btn" @click="closeUI">
+                    <i class="fas fa-times"></i>
+                </button>
 
-        <div class="close-button" id="close-btn">&times;</div>
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Settings Icon -->
+                    <div class="settings-icon" @click="openSettings">
+                        <i class="fas fa-cog"></i>
+                    </div>
 
-        <div class="sidebar">
-            <div class="settings-icon" onclick="openSettings()">
-                <i class="fas fa-cog"></i>
+                    <!-- Sidebar Header -->
+                    <h2 class="sidebar-header">{{ config?.texts?.sidebarHeader || 'Categories' }}</h2>
+
+                    <!-- Search Bar -->
+                    <div v-if="settings.showSearchBar" class="search-bar">
+                        <input 
+                            type="text" 
+                            v-model="searchQuery" 
+                            :placeholder="config?.texts?.searchPlaceholder || 'Search...'"
+                            class="search-input">
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="categories">
+                        <template v-for="(category, key) in filteredCategories" :key="key">
+                            <!-- Category with subcategories -->
+                            <div v-if="category.subcategories" class="category">
+                                <button 
+                                    class="category-btn"
+                                    :class="{ active: activeCategory === key }"
+                                    @click="toggleCategory(key)">
+                                    <i v-if="category.icon" :class="category.icon" class="category-icon"></i>
+                                    <span>{{ category.title }}</span>
+                                    <i class="fas fa-chevron-right chevron" :class="{ rotated: isCategoryExpanded(key) }"></i>
+                                </button>
+                                
+                                <transition name="subcategory-slide">
+                                    <div v-if="isCategoryExpanded(key)" class="subcategories">
+                                        <button 
+                                            v-for="(sub, subKey) in category.subcategories"
+                                            :key="subKey"
+                                            class="subcategory-btn"
+                                            :class="{ active: activeCategory === subKey }"
+                                            @click="loadContent(key, subKey)">
+                                            <i v-if="sub.icon" :class="sub.icon" class="subcategory-icon"></i>
+                                            <span>{{ sub.title }}</span>
+                                        </button>
+                                    </div>
+                                </transition>
+                            </div>
+
+                            <!-- Simple category without subcategories -->
+                            <button 
+                                v-else
+                                class="category-btn"
+                                :class="{ active: activeCategory === key }"
+                                @click="loadContent(key)">
+                                <i v-if="category.icon" :class="category.icon" class="category-icon"></i>
+                                <span>{{ category.title }}</span>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Content Area -->
+                <div class="content">
+                    <div class="content-area" :style="contentStyles">
+                        <h1>{{ currentTitle }}</h1>
+                        <div v-html="currentContent"></div>
+                    </div>
+                </div>
             </div>
+        </transition>
 
-            <h2 class="sidebar-header" id="sidebar-header"></h2>
+        <!-- Settings Modal -->
+        <transition name="modal-fade">
+            <div v-if="showSettings" class="modal-overlay" @click="closeSettings">
+                <div class="modal-content" @click.stop>
+                    <button class="modal-close" @click="closeSettings">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <h2>{{ config?.texts?.uiSettings || 'UI Settings' }}</h2>
+                    <p>{{ config?.texts?.uiSettingsDescription || 'Customize the UI settings.' }}</p>
 
-            <div class="search-bar">
-                <input type="text" id="search-input" placeholder="">
+                    <div class="settings-item">
+                        <span>{{ config?.texts?.changeTextSize || 'Change Text Size:' }}</span>
+                        <div class="btn-group">
+                            <button @click="changeFontSize('decrease')"><i class="fas fa-minus"></i></button>
+                            <button @click="changeFontSize('increase')"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="settings-item">
+                        <span>{{ config?.texts?.searchBar || 'Search Bar:' }}</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" v-model="settings.showSearchBar">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-item">
+                        <span>{{ config?.texts?.selectFont || 'Select Font:' }}</span>
+                        <select v-model="settings.selectedFont" @change="changeFont(settings.selectedFont)">
+                            <option 
+                                v-for="font in config?.texts?.availableFonts || []" 
+                                :key="font" 
+                                :value="font">{{ font }}</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
+        </transition>
 
-        <div class="content">
-            <h1 id="default-title"></h1>
-            <div id="content-area"></div>
-        </div>
+        <!-- Image Modal -->
+        <transition name="modal-fade">
+            <div v-if="showImageModal" class="image-modal" @click="closeImageModal">
+                <img :src="currentImageSrc" alt="Full screen image">
+            </div>
+        </transition>
+
+        <!-- External Link Modal -->
+        <transition name="modal-fade">
+            <div v-if="showLinkModal" class="modal-overlay" @click="closeLinkModal">
+                <div class="modal-content link-modal" @click.stop>
+                    <button class="modal-close" @click="closeLinkModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <iframe :src="currentLinkUrl" frameborder="0"></iframe>
+                </div>
+            </div>
+        </transition>
     </div>
 
-    <div id="settings-modal" class="modal">
-        <div class="modal-content">
-
-            <span class="close" onclick="closeSettings()">&times;</span>
-            <h2 id="settings-header"></h2>
-            <p id="settings-description"></p>
-
-            <div class="settings-item">
-                <span id="text-size-label"></span>
-                <button onclick="changeTextSize('increase')"><i class="fas fa-plus"></i></button>
-                <button onclick="changeTextSize('decrease')"><i class="fas fa-minus"></i></button>
-            </div>
-
-            <div class="settings-item">
-                <span id="search-bar-label"></span>
-                <label class="switch">
-                    <input type="checkbox" id="search-toggle" onchange="toggleSearchBar()">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-
-            <div class="settings-item">
-                <span id="select-font-label"></span>
-                <select id="font-selector" onchange="changeFont(this.value)"></select>
-            </div>
-        </div>
-    </div>
-
-    <div id="externalLinkModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeExternalLinkModal()">&times;</span>
-            <iframe id="externalLinkIframe" src="" frameborder="0" style="width: 100%; height: 90vh;"></iframe>
-        </div>
-    </div>
+    <script src="https://unpkg.com/vue@3.2.31/dist/vue.global.prod.js"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

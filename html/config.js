@@ -33,7 +33,7 @@ const guidebookConfig = {
                         <h3>Links</h3>
 
                         <p><a href="javascript:openExternalLink('https://sheenthebest.tebex.io')">🌐 Website</a></p>
-                        <p><a>💬 discord.gg/YqMmT75hSu</a></p>
+                        <p><a href="javascript:openExternalBrowser('https://discord.gg/YqMmT75hSu')">💬 Discord</a></p>
                         <p><strong>IP Address:</strong> 123.456.789.0</p>
                         <img src="https://wallpapers.com/images/hd/fivem-6q3bx9g2gdcu4th5.jpg" alt="" style="width:100%; height:auto;"/>
                     `
@@ -85,7 +85,7 @@ const guidebookConfig = {
                             <li><strong>F3:</strong> Use action button.</li>
                             <li><strong>F5:</strong> Open phone.</li>
                         </ul>
-                        <img src="https://forum.cfx.re/uploads/default/original/4X/9/2/b/92b43363cb1860942270ea6cacd6f92e89b3ac11.jpeg" alt="Keybinds" style="width:100%; height:auto;"/>
+                        <img src="https://dunb17ur4ymx4.cloudfront.net/webstore/logos/bdfd7a3bbf55ba0b88fb12fa7291e6f70db975f0.png" alt="Keybinds" style="width:100%; height:auto;"/>
                     `
                 },
                 getJob: { // always unique
