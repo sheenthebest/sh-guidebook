@@ -1,5 +1,8 @@
 # FiveM Guidebook
 
+## Showcase
+![Screenshot](https://forum-cfx-re.akamaized.net/original/5X/0/9/b/8/09b836e4066a2e82dec8549b6eaf296c97662de8.jpeg?raw=true)
+
 ## Features List
 
 **Categorization and Subcategories:**
